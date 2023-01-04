@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1672789914 source:c:\users\hry\desktop\v4w2-ctl\main.cpp
+	<iostream>
+	<dshow.h>
+	<vector>
+	<fstream>
+	<algorithm>
+
