@@ -1,0 +1,4 @@
+YUY2
+YUYV
+YVYU
+MJPG
