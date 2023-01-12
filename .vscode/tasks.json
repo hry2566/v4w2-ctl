@@ -1,0 +1,116 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "MinGW-Debug-Build",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"--version",
+			],
+			"dependsOn": [
+				"MinGW-Debug-Link"
+			]
+		},
+		{
+			"type": "cppbuild",
+			"label": "MinGW-Release-Build",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"--version",
+			],
+			"dependsOn": [
+				"MinGW-Release-Link"
+			]
+		},
+		{
+			"label": "MinGW-Compile",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-Wall",
+				"-fexceptions",
+				"-g",
+				"-c",
+				"${file}",
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.o"
+			],
+			"options": {
+				"cwd": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin"
+			},
+		},
+		{
+			"label": "MinGW-Debug-Link",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${fileDirname}\\${fileBasenameNoExtension}.o",
+				"-static-libstdc++",
+				"-static-libgcc",
+				"-static",
+				// "-lkernel32",
+				// "-luser32",
+				// "-lgdi32",
+				// "-lwinspool",
+				// "-lcomdlg32",
+				// "-ladvapi32",
+				// "-lshell32",
+				"-lole32",
+				"-loleaut32",
+				"-luuid",
+				// "-lcomctl32",
+				// "-lwsock32",
+				// "-lodbc32",
+				// "-lshlwapi",
+				// "-lversion",
+				// "-loleacc",
+				// "-luxtheme",
+				"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\um\\x64\\strmiids.lib",
+			],
+			"options": {
+				"cwd": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin"
+			},
+			"dependsOn": [
+				"MinGW-Compile"
+			]
+		},
+		{
+			"label": "MinGW-Release-Link",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-o",
+				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${fileDirname}\\${fileBasenameNoExtension}.o",
+				"-s",
+				"-static-libstdc++",
+				"-static-libgcc",
+				"-static",
+				// "-lkernel32",
+				// "-luser32",
+				// "-lgdi32",
+				// "-lwinspool",
+				// "-lcomdlg32",
+				// "-ladvapi32",
+				// "-lshell32",
+				"-lole32",
+				"-loleaut32",
+				"-luuid",
+				// "-lcomctl32",
+				// "-lwsock32",
+				// "-lodbc32",
+				// "-lshlwapi",
+				// "-lversion",
+				// "-loleacc",
+				// "-luxtheme",
+				"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\um\\x64\\strmiids.lib",
+			],
+			"options": {
+				"cwd": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin"
+			},
+			"dependsOn": [
+				"MinGW-Compile"
+			]
+		},
+	]
+}
