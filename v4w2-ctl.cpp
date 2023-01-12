@@ -229,23 +229,48 @@ void get_config(IBaseFilter *pbf)
             if (i == 0)
             {
                 std::cout << "ioctl: VIDIOC_ENUM_FMT" << std::endl;
+                std::cout << "	Type: Video Capture" << std::endl;
+                std::cout << std::endl;
             }
 
             if (type != format_list[i].type)
             {
                 type = format_list[i].type;
-                std::cout << "	Index       : " << type_cnt << std::endl;
-                std::cout << "	Type        : Video Capture" << std::endl;
-                std::cout << "	Pixel Format: '" << type << "'" << std::endl;
-                std::cout << "	Name        : " << type << std::endl;
+                std::cout << "	[" << type_cnt << "]: '" << type << "' (" << type << ")" << std::endl;
                 type_cnt++;
             }
 
             std::cout << "		Size: Discrete " << format_list[i].width << "x" << format_list[i].height << std::endl;
             std::cout << std::fixed;
-            std::cout << "			Interval: Discrete " << std::setprecision(3) << 1 / format_list[i].fps << "s (" << std::setprecision(3) << format_list[i].fps << " fps)" << std::endl;
+            std::cout << "		      Interval: Discrete " << std::setprecision(3) << 1 / format_list[i].fps << "s (" << std::setprecision(3) << format_list[i].fps << " fps)" << std::endl;
         }
     }
+    // if (int(format_list.size() > 0))
+    // {
+    //     std::string type = "";
+    //     int type_cnt = 0;
+    //     for (int i = 0; i < int(format_list.size()); i++)
+    //     {
+    //         if (i == 0)
+    //         {
+    //             std::cout << "ioctl: VIDIOC_ENUM_FMT" << std::endl;
+    //         }
+
+    //         if (type != format_list[i].type)
+    //         {
+    //             type = format_list[i].type;
+    //             std::cout << "	Index       : " << type_cnt << std::endl;
+    //             std::cout << "	Type        : Video Capture" << std::endl;
+    //             std::cout << "	Pixel Format: '" << type << "'" << std::endl;
+    //             std::cout << "	Name        : " << type << std::endl;
+    //             type_cnt++;
+    //         }
+
+    //         std::cout << "		Size: Discrete " << format_list[i].width << "x" << format_list[i].height << std::endl;
+    //         std::cout << std::fixed;
+    //         std::cout << "			Interval: Discrete " << std::setprecision(3) << 1 / format_list[i].fps << "s (" << std::setprecision(3) << format_list[i].fps << " fps)" << std::endl;
+    //     }
+    // }
 }
 
 video_formats get_format_type(VIDEOINFOHEADER *video)
