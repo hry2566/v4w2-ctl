@@ -24,6 +24,22 @@
 			]
 		},
 		{
+			"label": "MinGW-Compile1",
+			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
+			"args": [
+				"-Wall",
+				"-fexceptions",
+				"-g",
+				"-c",
+				"${workspaceFolder}\\v4w2-ctl.cpp",
+				"-o",
+				"${workspaceFolder}\\v4w2-ctl.o"
+			],
+			"options": {
+				"cwd": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin"
+			},
+		},
+		{
 			"label": "MinGW-Compile",
 			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
 			"args": [
@@ -31,13 +47,16 @@
 				"-fexceptions",
 				"-g",
 				"-c",
-				"${file}",
+				"${workspaceFolder}\\ClsDirectShow.cpp",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.o"
+				"${workspaceFolder}\\ClsDirectShow.o"
 			],
 			"options": {
 				"cwd": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin"
 			},
+			"dependsOn": [
+				"MinGW-Compile1"
+			]
 		},
 		{
 			"label": "MinGW-Debug-Link",
@@ -45,7 +64,8 @@
 			"args": [
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
-				"${fileDirname}\\${fileBasenameNoExtension}.o",
+				// "${fileDirname}\\${fileBasenameNoExtension}.o",
+				"${workspaceFolder}\\*.o",
 				"-static-libstdc++",
 				"-static-libgcc",
 				"-static",
@@ -81,7 +101,8 @@
 			"args": [
 				"-o",
 				"${fileDirname}\\${fileBasenameNoExtension}.exe",
-				"${fileDirname}\\${fileBasenameNoExtension}.o",
+				// "${fileDirname}\\${fileBasenameNoExtension}.o",
+				"${workspaceFolder}\\*.o",
 				"-s",
 				"-static-libstdc++",
 				"-static-libgcc",
