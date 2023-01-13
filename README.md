@@ -10,7 +10,7 @@
  * MinGW + VSCode (Windows SDK)
   
 ## スクリーンショット  
-![image](https://user-images.githubusercontent.com/86605611/211966086-d4d7a4b7-6f87-4f24-b3ae-98f622ee15f5.png)  
+![image](https://user-images.githubusercontent.com/86605611/211980718-02feac41-9603-49c3-a4fd-badbdbda3102.png)  
   
 ## 実装
  ・デバイス一覧  
