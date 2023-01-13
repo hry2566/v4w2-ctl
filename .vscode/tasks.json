@@ -63,7 +63,7 @@
 			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
 			"args": [
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${workspaceFolder}\\v4w2-ctl.exe",
 				// "${fileDirname}\\${fileBasenameNoExtension}.o",
 				"${workspaceFolder}\\*.o",
 				"-static-libstdc++",
@@ -100,7 +100,7 @@
 			"command": "C:\\Users\\HRY\\0000_APPS\\CodeBlocks\\MinGW\\bin\\g++.exe",
 			"args": [
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe",
+				"${workspaceFolder}\\v4w2-ctl.exe",
 				// "${fileDirname}\\${fileBasenameNoExtension}.o",
 				"${workspaceFolder}\\*.o",
 				"-s",
