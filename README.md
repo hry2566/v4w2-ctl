@@ -11,10 +11,12 @@
   
 ## スクリーンショット  
 ![image](https://user-images.githubusercontent.com/86605611/211980718-02feac41-9603-49c3-a4fd-badbdbda3102.png)  
+![image](https://user-images.githubusercontent.com/86605611/212462382-ce0d7689-e9dc-4f12-8389-89a09f920fcf.png)
   
 ## 実装
  ・デバイス一覧  
  ・デバイスのフォーマット/フレームサイズ/フレームレートの一覧  
+ ・デバイスの対応している設定項目一覧
   
 ## 対応フォーマット  
 ・format_types.txtに無いフォーマットは「1196444237」等の数値が表示されます。type_list.txtから4文字(MJPG等)をformat_types.txtへ追記  
