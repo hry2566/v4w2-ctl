@@ -168,12 +168,12 @@ video_formats ClsDirectShow::get_format_type(VIDEOINFOHEADER *video)
     char drive[MAX_PATH + 1], dir[MAX_PATH + 1], fname[MAX_PATH + 1], ext[MAX_PATH + 1];
 
     GetModuleFileName(NULL, Path, MAX_PATH);
-    _splitpath(Path, drive, dir, fname, ext); // ƒpƒX–¼‚ð\¬—v‘f‚É•ª‰ð‚µ‚Ü‚·
-    // printf("Š®‘SƒpƒX : %s\n", Path);
-    // printf("ƒhƒ‰ƒCƒu : %s\n", drive);
-    // printf("ƒfƒBƒŒƒNƒgƒŠ ƒpƒX : %s\n", dir);
-    // printf("ƒx[ƒX ƒtƒ@ƒCƒ‹–¼ (Šg’£Žq‚È‚µ) : %s\n", fname);
-    // printf("ƒtƒ@ƒCƒ‹–¼‚ÌŠg’£Žq : %s\n", ext);
+    _splitpath(Path, drive, dir, fname, ext); // ãƒ‘ã‚¹åã‚’æ§‹æˆè¦ç´ ã«åˆ†è§£ã—ã¾ã™
+    // printf("å®Œå…¨ãƒ‘ã‚¹ : %s\n", Path);
+    // printf("ãƒ‰ãƒ©ã‚¤ãƒ– : %s\n", drive);
+    // printf("ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª ãƒ‘ã‚¹ : %s\n", dir);
+    // printf("ãƒ™ãƒ¼ã‚¹ ãƒ•ã‚¡ã‚¤ãƒ«å (æ‹¡å¼µå­ãªã—) : %s\n", fname);
+    // printf("ãƒ•ã‚¡ã‚¤ãƒ«åã®æ‹¡å¼µå­ : %s\n", ext);
 
     file_path = std::string(dir) + "\\format_types.txt";
     std::replace(file_path.begin(), file_path.end(), '\\', '/');
@@ -501,6 +501,7 @@ void ClsDirectShow::set_user_controls(IBaseFilter *pbf, std::string prop, int va
         }
         else
         {
+            hr = pCamCtl->Get(prop_index, &Val, &Flags);
             hr = pCamCtl->Set(prop_index, val, Flags);
         }
 
