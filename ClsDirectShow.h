@@ -26,6 +26,7 @@ public:
     void get_devices_list(IEnumMoniker *pClassEnum);
     void get_videoformats_list(int device_num, IEnumMoniker *pClassEnum);
     void get_camera_settings(int device_num, IEnumMoniker *pClassEnum);
+    void set_camera_settings(int device_num, IEnumMoniker *pClassEnum, std::string prop, int val);
 
 protected:
 private:
@@ -33,6 +34,8 @@ private:
     video_formats get_format_type(VIDEOINFOHEADER *video);
     void get_user_controls(IBaseFilter *pbf);
     void get_camera_controls(IBaseFilter *pbf);
+    void set_user_controls(IBaseFilter *pbf, std::string proc, int val);
+    std::string replaceOtherStr(std::string &replacedStr, std::string from, std::string to);
 };
 
 #endif // CLSDIRECTSHOW_H
