@@ -179,11 +179,6 @@ video_formats ClsDirectShow::get_format_type(VIDEOINFOHEADER *video)
     std::replace(file_path.begin(), file_path.end(), '\\', '/');
 
     std::ifstream input_file(file_path.c_str());
-    //    if (!input_file.is_open())
-    //    {
-    //        return v_formats;
-    //    }
-
     while (getline(input_file, line))
     {
         format_types.push_back(std::string(line));
@@ -242,16 +237,16 @@ void ClsDirectShow::get_camera_settings(int device_num, IEnumMoniker *pClassEnum
 
 void ClsDirectShow::get_user_controls(IBaseFilter *pbf)
 {
-    std::string proc[] = {"brightness",
-                          "contrast",
-                          "hue",
-                          "saturation",
-                          "sharpness",
-                          "gamma",
-                          "colorEnable",
-                          "whiteBalance",
-                          "backlight compensation",
-                          "gain"};
+    std::vector<std::string> proc_user = {"brightness",
+                                          "contrast",
+                                          "hue",
+                                          "saturation",
+                                          "sharpness",
+                                          "gamma",
+                                          "colorEnable",
+                                          "whitebalance",
+                                          "backlight-compensation",
+                                          "gain"};
 
     IAMVideoProcAmp *pProcAmp = 0;
     HRESULT hr = pbf->QueryInterface(IID_IAMVideoProcAmp, (void **)&pProcAmp);
@@ -282,27 +277,27 @@ void ClsDirectShow::get_user_controls(IBaseFilter *pbf)
             if (AutoFlags == 3)
             {
                 int auto_val = Flags;
-                if (Flags == 0)
+                if (Flags == 2)
                 {
-                    auto_val = 2;
+                    auto_val = 0;
                 }
                 str_proc = "";
-                for (int i = int(proc[proc_amp].size()) + 10; i < 22; i++)
+                for (int i = int(proc_user[proc_amp].size()) + 10; i < 22; i++)
                 {
                     str_proc += " ";
                 }
 
-                std::cout << "\t" << str_proc << proc[proc_amp] << "_automatic (bool)"
+                std::cout << "\t" << str_proc << proc_user[proc_amp] << "_automatic (bool)"
                           << "\t: default=" << 1 << " value=" << auto_val << std::endl;
             }
 
             str_proc = "";
-            for (int i = int(proc[proc_amp].size()); i < 22; i++)
+            for (int i = int(proc_user[proc_amp].size()); i < 22; i++)
             {
                 str_proc += " ";
             }
 
-            std::cout << "\t" << str_proc << proc[proc_amp] << " (int) \t: min=" << Min << " max=" << Max << " step=" << Step << " default=" << Default << " value=" << Val << std::endl;
+            std::cout << "\t" << str_proc << proc_user[proc_amp] << " (int) \t: min=" << Min << " max=" << Max << " step=" << Step << " default=" << Default << " value=" << Val << std::endl;
         }
     }
 
@@ -311,13 +306,13 @@ void ClsDirectShow::get_user_controls(IBaseFilter *pbf)
 
 void ClsDirectShow::get_camera_controls(IBaseFilter *pbf)
 {
-    std::string proc[] = {"pan",
-                          "tilt",
-                          "roll",
-                          "zoom",
-                          "exposure",
-                          "iris",
-                          "focus"};
+    std::vector<std::string> proc_contrl = {"pan",
+                                            "tilt",
+                                            "roll",
+                                            "zoom",
+                                            "exposure",
+                                            "iris",
+                                            "focus"};
 
     IAMCameraControl *pCamCtl = 0;
     HRESULT hr = pbf->QueryInterface(IID_IAMCameraControl, (void **)&pCamCtl);
@@ -348,28 +343,183 @@ void ClsDirectShow::get_camera_controls(IBaseFilter *pbf)
             if (AutoFlags == 3)
             {
                 int auto_val = Flags;
-                if (Flags == 0)
+                if (Flags == 2)
                 {
-                    auto_val = 2;
+                    auto_val = 0;
                 }
                 str_proc = "";
-                for (int i = int(proc[camctl_num].size()) + 10; i < 22; i++)
+                for (int i = int(proc_contrl[camctl_num].size()) + 10; i < 22; i++)
                 {
                     str_proc += " ";
                 }
 
-                std::cout << "\t" << str_proc << proc[camctl_num] << "_automatic (bool)"
+                std::cout << "\t" << str_proc << proc_contrl[camctl_num] << "_automatic (bool)"
                           << "\t: default=" << 1 << " value=" << auto_val << std::endl;
             }
 
             str_proc = "";
-            for (int i = int(proc[camctl_num].size()); i < 22; i++)
+            for (int i = int(proc_contrl[camctl_num].size()); i < 22; i++)
             {
                 str_proc += " ";
             }
 
-            std::cout << "\t" << str_proc << proc[camctl_num] << " (int) \t: min=" << Min << " max=" << Max << " step=" << Step << " default=" << Default << " value=" << Val << std::endl;
+            std::cout << "\t" << str_proc << proc_contrl[camctl_num] << " (int) \t: min=" << Min << " max=" << Max << " step=" << Step << " default=" << Default << " value=" << Val << std::endl;
         }
     }
     std::cout << std::endl;
+}
+
+void ClsDirectShow::set_camera_settings(int device_num, IEnumMoniker *pClassEnum, std::string proc, int val)
+{
+    ULONG cFetched;
+    IMoniker *pMoniker = NULL;
+    int n = 0;
+    pClassEnum->Reset();
+
+    while (pClassEnum->Next(1, &pMoniker, &cFetched) == S_OK)
+    {
+        if (device_num == n)
+        {
+            IBaseFilter *pbf = NULL;
+            pMoniker->BindToObject(0, 0, IID_IBaseFilter, (void **)&pbf);
+            set_user_controls(pbf, proc, val);
+            // set_camera_controls(pbf);
+            return;
+        }
+        n++;
+    }
+}
+
+void ClsDirectShow::set_user_controls(IBaseFilter *pbf, std::string prop, int val)
+{
+    int prop_index = -1;
+    bool auto_flag = false;
+
+    if (prop.find("_automatic") != std::string::npos)
+    {
+        prop = replaceOtherStr(prop, "_automatic", "");
+        auto_flag = true;
+    }
+
+    std::vector<std::string> proc_user = {"brightness",
+                                          "contrast",
+                                          "hue",
+                                          "saturation",
+                                          "sharpness",
+                                          "gamma",
+                                          "colorEnable",
+                                          "whitebalance",
+                                          "backlight-compensation",
+                                          "gain"};
+
+    for (int i = 0; i < int(proc_user.size()); i++)
+    {
+        if (proc_user[i] == prop)
+        {
+            prop_index = i;
+            break;
+        }
+    }
+
+    if (prop_index != -1)
+    {
+        long Val, Flags;
+        IAMVideoProcAmp *pProcAmp = 0;
+        HRESULT hr = pbf->QueryInterface(IID_IAMVideoProcAmp, (void **)&pProcAmp);
+
+        if (FAILED(hr))
+        {
+            return;
+        }
+
+        if (auto_flag)
+        {
+            hr = pProcAmp->Get(prop_index, &Val, &Flags);
+
+            if (val == 0)
+            {
+                Flags = VideoProcAmp_Flags_Manual;
+            }
+            else if (val == 1)
+            {
+                Flags = VideoProcAmp_Flags_Auto;
+            }
+            hr = pProcAmp->Set(prop_index, Val, Flags);
+        }
+        else
+        {
+            hr = pProcAmp->Get(prop_index, &Val, &Flags);
+            hr = pProcAmp->Set(prop_index, val, Flags);
+        }
+
+        if (SUCCEEDED(hr))
+        {
+            printf("success");
+        }
+    }
+    else
+    {
+        std::vector<std::string> proc_contrl = {"pan",
+                                                "tilt",
+                                                "roll",
+                                                "zoom",
+                                                "exposure",
+                                                "iris",
+                                                "focus"};
+
+        for (int i = 0; i < int(proc_contrl.size()); i++)
+        {
+            if (proc_contrl[i] == prop)
+            {
+                prop_index = i;
+                break;
+            }
+        }
+
+        long Val, Flags;
+        IAMCameraControl *pCamCtl = 0;
+        HRESULT hr = pbf->QueryInterface(IID_IAMCameraControl, (void **)&pCamCtl);
+
+        if (FAILED(hr))
+        {
+            return;
+        }
+
+        if (auto_flag)
+        {
+            hr = pCamCtl->Get(prop_index, &Val, &Flags);
+
+            if (val == 0)
+            {
+                Flags = VideoProcAmp_Flags_Manual;
+            }
+            else if (val == 1)
+            {
+                Flags = VideoProcAmp_Flags_Auto;
+            }
+            hr = pCamCtl->Set(prop_index, Val, val);
+        }
+        else
+        {
+            hr = pCamCtl->Set(prop_index, val, Flags);
+        }
+
+        if (SUCCEEDED(hr))
+        {
+            printf("success");
+        }
+    }
+}
+
+std::string ClsDirectShow::replaceOtherStr(std::string &replacedStr, std::string from, std::string to)
+{
+    const unsigned int pos = replacedStr.find(from);
+    const int len = from.length();
+
+    if (pos == std::string::npos || from.empty())
+    {
+        return replacedStr;
+    }
+
+    return replacedStr.replace(pos, len, to);
 }
