@@ -59,7 +59,7 @@ void ClsDirectShow::get_devices_list(IEnumMoniker *pClassEnum)
         device_path = var.bstrVal;
         VariantClear(&var);
 
-        std::wcout << device_name << " (" << device_path << "):" << std::endl;
+        std::wcout << device_name << ": (" << device_path << "):" << std::endl;
         std::wcout << "        /dev/video" << n << std::endl;
         n++;
     }
