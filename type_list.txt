@@ -1,3 +1,5 @@
+どこかのサイトからコピペ（感謝致します）
+
 810961203 {3IV0} : result := 'MPEG4-based codec 3ivx';
 827738419 {3IV1} : result := 'MPEG4-based codec 3ivx';
 844515635 {3IV2} : result := 'MPEG4-based codec 3ivx';
