@@ -1,0 +1,137 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "MinGW-Debug-Build",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"--version",
+			],
+			"dependsOn": [
+				"MinGW-Debug-Link"
+			]
+		},
+		{
+			"type": "cppbuild",
+			"label": "MinGW-Release-Build",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"--version",
+			],
+			"dependsOn": [
+				"MinGW-Release-Link"
+			]
+		},
+		{
+			"label": "MinGW-Compile1",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"-Wall",
+				"-fexceptions",
+				"-g",
+				"-c",
+				"${workspaceFolder}\\v4w2-ctl.cpp",
+				"-o",
+				"${workspaceFolder}\\v4w2-ctl.o"
+			],
+			"options": {
+				"cwd": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin"
+			},
+		},
+		{
+			"label": "MinGW-Compile",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"-Wall",
+				"-fexceptions",
+				"-g",
+				"-c",
+				"${workspaceFolder}\\ClsDirectShow.cpp",
+				"-o",
+				"${workspaceFolder}\\ClsDirectShow.o"
+			],
+			"options": {
+				"cwd": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin"
+			},
+			"dependsOn": [
+				"MinGW-Compile1"
+			]
+		},
+		{
+			"label": "MinGW-Debug-Link",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"-o",
+				"${workspaceFolder}\\v4w2-ctl.exe",
+				// "${fileDirname}\\${fileBasenameNoExtension}.o",
+				"${workspaceFolder}\\*.o",
+				"-static-libstdc++",
+				"-static-libgcc",
+				"-static",
+				// "-lkernel32",
+				// "-luser32",
+				// "-lgdi32",
+				// "-lwinspool",
+				// "-lcomdlg32",
+				// "-ladvapi32",
+				// "-lshell32",
+				"-lole32",
+				"-loleaut32",
+				"-luuid",
+				// "-lcomctl32",
+				// "-lwsock32",
+				// "-lodbc32",
+				// "-lshlwapi",
+				// "-lversion",
+				// "-loleacc",
+				// "-luxtheme",
+				"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\um\\x64\\strmiids.lib",
+			],
+			"options": {
+				"cwd": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin"
+			},
+			"dependsOn": [
+				"MinGW-Compile"
+			]
+		},
+		{
+			"label": "MinGW-Release-Link",
+			"command": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin\\g++.exe",
+			"args": [
+				"-o",
+				"${workspaceFolder}\\v4w2-ctl.exe",
+				// "${fileDirname}\\${fileBasenameNoExtension}.o",
+				"${workspaceFolder}\\*.o",
+				"-s",
+				"-static-libstdc++",
+				"-static-libgcc",
+				"-static",
+				// "-lkernel32",
+				// "-luser32",
+				// "-lgdi32",
+				// "-lwinspool",
+				// "-lcomdlg32",
+				// "-ladvapi32",
+				// "-lshell32",
+				"-lole32",
+				"-loleaut32",
+				"-luuid",
+				// "-lcomctl32",
+				// "-lwsock32",
+				// "-lodbc32",
+				// "-lshlwapi",
+				// "-lversion",
+				// "-loleacc",
+				// "-luxtheme",
+				"C:\\Program Files (x86)\\Windows Kits\\10\\Lib\\10.0.22621.0\\um\\x64\\strmiids.lib",
+			],
+			"options": {
+				"cwd": "C:\\Users\\2566haraya\\Desktop\\DATA\\AppDir\\CodeBlocks\\MinGW\\64bit\\bin"
+			},
+			"dependsOn": [
+				"MinGW-Compile"
+			]
+		},
+	]
+}
