@@ -36,6 +36,7 @@ private:
     void get_camera_controls(IBaseFilter *pbf);
     void set_user_controls(IBaseFilter *pbf, std::string proc, int val);
     std::string replaceOtherStr(std::string &replacedStr, std::string from, std::string to);
+    std::string fourccIntToBytes(int fourcc);
 };
 
 #endif // CLSDIRECTSHOW_H
