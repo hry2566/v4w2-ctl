@@ -164,54 +164,65 @@ video_formats ClsDirectShow::get_format_type(VIDEOINFOHEADER *video)
     std::string file_path;
     video_formats v_formats;
 
-    char Path[MAX_PATH + 1];
-    char drive[MAX_PATH + 1], dir[MAX_PATH + 1], fname[MAX_PATH + 1], ext[MAX_PATH + 1];
+    // char Path[MAX_PATH + 1];
+    // char drive[MAX_PATH + 1], dir[MAX_PATH + 1], fname[MAX_PATH + 1], ext[MAX_PATH + 1];
 
-    GetModuleFileName(NULL, Path, MAX_PATH);
-    _splitpath(Path, drive, dir, fname, ext); // パス名を構成要素に分解します
+    // GetModuleFileName(NULL, Path, MAX_PATH);
+    // _splitpath(Path, drive, dir, fname, ext); // パス名を構成要素に分解します
     // printf("完全パス : %s\n", Path);
     // printf("ドライブ : %s\n", drive);
     // printf("ディレクトリ パス : %s\n", dir);
     // printf("ベース ファイル名 (拡張子なし) : %s\n", fname);
     // printf("ファイル名の拡張子 : %s\n", ext);
 
-    file_path = std::string(dir) + "\\format_types.txt";
-    std::replace(file_path.begin(), file_path.end(), '\\', '/');
+    // file_path = std::string(dir) + "\\format_types.txt";
+    // std::replace(file_path.begin(), file_path.end(), '\\', '/');
 
-    std::ifstream input_file(file_path.c_str());
-    while (getline(input_file, line))
-    {
-        format_types.push_back(std::string(line));
-    }
-    input_file.close();
+    // std::ifstream input_file(file_path.c_str());
+    // while (getline(input_file, line))
+    // {
+    //     format_types.push_back(std::string(line));
+    // }
+    // input_file.close();
 
-    for (int i = 0; i < (int)format_types.size(); i++)
-    {
-        char c1 = (byte)format_types[i][0];
-        char c2 = (byte)format_types[i][1];
-        char c3 = (byte)format_types[i][2];
-        char c4 = (byte)format_types[i][3];
-        if (video->bmiHeader.biCompression == MAKEFOURCC(c1, c2, c3, c4))
-        {
-            format = format_types[i];
-            break;
-        }
-    }
+    // for (int i = 0; i < (int)format_types.size(); i++)
+    // {
+    //     char c1 = (byte)format_types[i][0];
+    //     char c2 = (byte)format_types[i][1];
+    //     char c3 = (byte)format_types[i][2];
+    //     char c4 = (byte)format_types[i][3];
+    //     if (video->bmiHeader.biCompression == MAKEFOURCC(c1, c2, c3, c4))
+    //     {
+    //         format = format_types[i];
+    //         break;
+    //     }
+    // }
 
     v_formats.width = width;
     v_formats.height = height;
     v_formats.fps = frame;
     v_formats.flag = true;
 
-    if (format != "")
-    {
-        v_formats.type = format;
-    }
-    else
-    {
-        v_formats.type = std::to_string(video->bmiHeader.biCompression);
-    }
+    // if (format != "")
+    // {
+    //     v_formats.type = format;
+    // }
+    // else
+    // {
+    // v_formats.type = std::to_string(video->bmiHeader.biCompression);
+    v_formats.type = fourccIntToBytes(video->bmiHeader.biCompression);
+    // }
     return v_formats;
+}
+
+std::string ClsDirectShow::fourccIntToBytes(int fourcc)
+{
+    std::string result;
+    result.push_back(static_cast<char>(fourcc & 0xFF));
+    result.push_back(static_cast<char>((fourcc >> 8) & 0xFF));
+    result.push_back(static_cast<char>((fourcc >> 16) & 0xFF));
+    result.push_back(static_cast<char>((fourcc >> 24) & 0xFF));
+    return result;
 }
 
 void ClsDirectShow::get_camera_settings(int device_num, IEnumMoniker *pClassEnum)
