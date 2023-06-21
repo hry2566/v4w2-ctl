@@ -1,4 +1,0 @@
-MJPG
-YUY2
-YUYV
-YVYU
